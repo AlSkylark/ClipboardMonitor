@@ -39,6 +39,7 @@ namespace ClipboardMonitor
 		IntPtr nextClipboardViewer;
         private NotifyIcon niClipboardMonitor;
         private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem setRDPFileToolStripMenuItem;
         private ContextMenuStrip ctxtForNICON;
         private IContainer components;
 
@@ -48,6 +49,7 @@ namespace ClipboardMonitor
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
+            if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); }
             this.WindowState = FormWindowState.Minimized;
 			nextClipboardViewer = (IntPtr)SetClipboardViewer((int) this.Handle);
 			//
@@ -84,6 +86,7 @@ namespace ClipboardMonitor
             this.niClipboardMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.ctxtForNICON = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.setRDPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtForNICON.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,9 +113,10 @@ namespace ClipboardMonitor
             // ctxtForNICON
             // 
             this.ctxtForNICON.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setRDPFileToolStripMenuItem,
             this.toolStripMenuItem1});
             this.ctxtForNICON.Name = "ctxtForNICON";
-            this.ctxtForNICON.Size = new System.Drawing.Size(181, 48);
+            this.ctxtForNICON.Size = new System.Drawing.Size(181, 70);
             // 
             // toolStripMenuItem1
             // 
@@ -120,6 +124,13 @@ namespace ClipboardMonitor
             this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Close";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // setRDPFileToolStripMenuItem
+            // 
+            this.setRDPFileToolStripMenuItem.Name = "setRDPFileToolStripMenuItem";
+            this.setRDPFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setRDPFileToolStripMenuItem.Text = "Set RDP File";
+            this.setRDPFileToolStripMenuItem.Click += new System.EventHandler(this.setRDPFileToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -262,6 +273,19 @@ namespace ClipboardMonitor
             //    text = text.Insert(0, "https://");
             //}
             return text;
+        }
+
+        private void setRDPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog chooseFile = new SaveFileDialog();
+            chooseFile.Title = "Select RDP Location";
+            chooseFile.Filter = "RDP Files (*.rdp)|*.rdp";
+            chooseFile.OverwritePrompt = false;
+            if (chooseFile.ShowDialog() == DialogResult.OK)
+            {
+                CMSettings.Default.RDPLocation = chooseFile.FileName;
+                CMSettings.Default.Save();
+            }
         }
     }
 }
