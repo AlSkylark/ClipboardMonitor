@@ -238,7 +238,16 @@ namespace ClipboardMonitor
             }
             else
             {
-                text = text.Insert(0, "www.");
+                if (text.IndexOf("http://") >= 0 || text.IndexOf("https://") >= 0)
+                {
+                    string which;
+                    if (text.IndexOf("http://") >= 0){ which = "http://"; } else{ which = "https://"; }
+                    int index = text.IndexOf(which);
+                    text = text.Insert(index + which.Length, "www.");
+                } else
+                {
+                    text = text.Insert(0, "www.");
+                }
             }
             //if (text.IndexOf("http://") >= 0)
             //{

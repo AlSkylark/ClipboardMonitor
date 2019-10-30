@@ -7,3 +7,12 @@ C:\Users\Alex Castro\Desktop\ExampleClipboard\ClipboardMonitor\obj\Debug\Clipboa
 C:\Users\Alex Castro\Desktop\ExampleClipboard\ClipboardMonitor\obj\Debug\ClipboardMonitor.exe
 C:\Users\Alex Castro\Desktop\ExampleClipboard\ClipboardMonitor\obj\Debug\ClipboardMonitor.pdb
 C:\Users\Alex Castro\Desktop\ExampleClipboard\ClipboardMonitor\obj\Debug\ClipboardMonitor.MainForm.resources
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Debug\ClipboardMonitor.exe.config
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Debug\ClipboardMonitor.exe
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Debug\ClipboardMonitor.pdb
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csprojAssemblyReference.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.MainForm.resources
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csproj.GenerateResource.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csproj.CoreCompileInputs.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.exe
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.pdb
