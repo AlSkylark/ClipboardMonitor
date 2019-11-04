@@ -223,6 +223,31 @@ namespace ClipboardMonitor
 			}
 		}
 
+        private string GetURL(string text)
+        {
+            text = text.Substring(9);
+            if (text.IndexOf("www.") >= 0)
+            {
+                //nothing, text is fine
+            }
+            else
+            {
+                if (text.IndexOf("http://") >= 0 || text.IndexOf("https://") >= 0)
+                {
+                    string which;
+                    if (text.IndexOf("http://") >= 0) { which = "http://"; } else { which = "https://"; }
+                    int index = text.IndexOf(which);
+                    text = text.Insert(index + which.Length, "www.");
+                }
+                else
+                {
+                    text = text.Insert(0, "www.");
+                }
+            }
+            return text;
+        }
+
+        //EVENTS
         private void rdp_Exited(object sender, EventArgs e)
         {
             //Invokes the Close method of the main app. Because this rdp is apparently outside of the UI thread we gotta use a delegate...
@@ -257,40 +282,6 @@ namespace ClipboardMonitor
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Close();
-        }
-        private string GetURL(string text)
-        {
-            text = text.Substring(9);
-            if (text.IndexOf("www.") >= 0)
-            {
-                //nothing, text is fine
-            }
-            else
-            {
-                if (text.IndexOf("http://") >= 0 || text.IndexOf("https://") >= 0)
-                {
-                    string which;
-                    if (text.IndexOf("http://") >= 0){ which = "http://"; } else{ which = "https://"; }
-                    int index = text.IndexOf(which);
-                    text = text.Insert(index + which.Length, "www.");
-                } else
-                {
-                    text = text.Insert(0, "www.");
-                }
-            }
-            //if (text.IndexOf("http://") >= 0)
-            //{
-            //    text = text.Replace("http://", "https://");
-            //}
-            //else if (text.IndexOf("https://")>=0)
-            //{
-            //    //nothing, text is fine
-            //}
-            //else
-            //{
-            //    text = text.Insert(0, "https://");
-            //}
-            return text;
         }
 
         private void setRDPFileToolStripMenuItem_Click(object sender, EventArgs e)
