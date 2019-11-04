@@ -42,22 +42,35 @@ namespace ClipboardMonitor
         private ToolStripMenuItem setRDPFileToolStripMenuItem;
         private ContextMenuStrip ctxtForNICON;
         private IContainer components;
-
+        private Process[] pname;
+        private Process rdp;
 
         public MainForm()
 		{
 
 			InitializeComponent();
-            if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); }
+            pname = Process.GetProcessesByName("mstsc");
+            if (pname.Length == 0)
+            {
+                if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); } //OPEN rdp
+                pname = Process.GetProcessesByName("mstsc"); //find it again and assign it to rdp p variable
+                rdp = pname[0];
+            }
+            else
+            {
+                rdp = pname[0];
+            }
+            rdp.EnableRaisingEvents = true;
+            rdp.Exited += new EventHandler(rdp_Exited);
             this.WindowState = FormWindowState.Minimized;
 			nextClipboardViewer = (IntPtr)SetClipboardViewer((int) this.Handle);
 
 		}
 
-		/// <summary>
-		/// Clean up any resources being used. Overriden to change the clipboard.
-		/// </summary>
-		protected override void Dispose( bool disposing )
+        /// <summary>
+        /// Clean up any resources being used. Overriden to change the clipboard.
+        /// </summary>
+        protected override void Dispose( bool disposing )
 		{
 			ChangeClipboardChain(this.Handle, nextClipboardViewer);
 			if( disposing )
@@ -187,7 +200,7 @@ namespace ClipboardMonitor
 			{
 				IDataObject iData = new DataObject();  
 				iData = Clipboard.GetDataObject();
-
+       
                 if (iData.GetDataPresent(DataFormats.Text))
                 {
                     //txtMain.Text = (string)iData.GetData(DataFormats.Text); //Enable if need to see text...
@@ -195,8 +208,8 @@ namespace ClipboardMonitor
                     if (t.IndexOf("LLFADB119") == 0)
                     {
                         t = GetURL(t);
-                        Process[] pname = Process.GetProcessesByName("mstsc");
-                        IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, pname[0].MainWindowTitle);
+                        
+                        IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, rdp.MainWindowTitle);
                         
                         ShowWindow(hwnd, SW_MINIMIZE);
                         Process.Start(t);
@@ -210,6 +223,12 @@ namespace ClipboardMonitor
 			}
 		}
 
+        private void rdp_Exited(object sender, EventArgs e)
+        {
+            //Invokes the Close method of the main app. Because this rdp is apparently outside of the UI thread we gotta use a delegate...
+            this.Invoke(new CloseDelegate(Close));
+        }
+
         private void MainForm_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -218,6 +237,7 @@ namespace ClipboardMonitor
                 niClipboardMonitor.Visible = true;
             }
         }
+        public delegate void CloseDelegate(); //Simple delegate to send the Close method...
 
         private void niClipboardMonitor_DoubleClick(object sender, EventArgs e)
         {

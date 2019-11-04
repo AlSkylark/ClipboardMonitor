@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="RDPLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\Users\Alex Castro\Desktop\Connect to Server.rdp</Value>
     </Setting>
   </Settings>
 </SettingsFile>
