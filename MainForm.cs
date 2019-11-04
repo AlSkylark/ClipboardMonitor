@@ -43,22 +43,19 @@ namespace ClipboardMonitor
         private ContextMenuStrip ctxtForNICON;
         private IContainer components;
 
+
         public MainForm()
 		{
-			//
-			// Required for Windows Form Designer support
-			//
+
 			InitializeComponent();
             if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); }
             this.WindowState = FormWindowState.Minimized;
 			nextClipboardViewer = (IntPtr)SetClipboardViewer((int) this.Handle);
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
+
 		}
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Clean up any resources being used. Overriden to change the clipboard.
 		/// </summary>
 		protected override void Dispose( bool disposing )
 		{
@@ -85,8 +82,8 @@ namespace ClipboardMonitor
             this.txtMain = new System.Windows.Forms.RichTextBox();
             this.niClipboardMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.ctxtForNICON = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.setRDPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtForNICON.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,7 +96,7 @@ namespace ClipboardMonitor
             this.txtMain.ReadOnly = true;
             this.txtMain.Size = new System.Drawing.Size(337, 23);
             this.txtMain.TabIndex = 0;
-            this.txtMain.Text = "-CLIPPBOARD-";
+            this.txtMain.Text = "You can close the application or minimize it to keep it running.";
             this.txtMain.WordWrap = false;
             // 
             // niClipboardMonitor
@@ -116,21 +113,21 @@ namespace ClipboardMonitor
             this.setRDPFileToolStripMenuItem,
             this.toolStripMenuItem1});
             this.ctxtForNICON.Name = "ctxtForNICON";
-            this.ctxtForNICON.Size = new System.Drawing.Size(181, 70);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem1.Text = "Close";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.ctxtForNICON.Size = new System.Drawing.Size(137, 48);
             // 
             // setRDPFileToolStripMenuItem
             // 
             this.setRDPFileToolStripMenuItem.Name = "setRDPFileToolStripMenuItem";
-            this.setRDPFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setRDPFileToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.setRDPFileToolStripMenuItem.Text = "Set RDP File";
             this.setRDPFileToolStripMenuItem.Click += new System.EventHandler(this.setRDPFileToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItem1.Text = "Close";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -142,7 +139,7 @@ namespace ClipboardMonitor
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Clipboard Monitor Example";
+            this.Text = "Link Opener";
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ctxtForNICON.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -165,7 +162,7 @@ namespace ClipboardMonitor
 			const int WM_DRAWCLIPBOARD = 0x308;
 			const int WM_CHANGECBCHAIN = 0x030D;
 
-			switch(m.Msg)
+            switch (m.Msg)
 			{
 				case WM_DRAWCLIPBOARD:
 					GetClipboardData();
@@ -178,7 +175,6 @@ namespace ClipboardMonitor
 					else
 						SendMessage(nextClipboardViewer, m.Msg, m.WParam, m.LParam);
 					break;
-
 				default:
 					base.WndProc(ref m);
 					break;
@@ -194,12 +190,14 @@ namespace ClipboardMonitor
 
                 if (iData.GetDataPresent(DataFormats.Text))
                 {
-                    //txtMain.Text = (string)iData.GetData(DataFormats.Text);
+                    //txtMain.Text = (string)iData.GetData(DataFormats.Text); //Enable if need to see text...
                     string t = (string)iData.GetData(DataFormats.Text);
                     if (t.IndexOf("LLFADB119") == 0)
                     {
                         t = GetURL(t);
-                        IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, "Connect to Server - server - Remote Desktop Connection");
+                        Process[] pname = Process.GetProcessesByName("mstsc");
+                        IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, pname[0].MainWindowTitle);
+                        
                         ShowWindow(hwnd, SW_MINIMIZE);
                         Process.Start(t);
                     }
