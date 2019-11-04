@@ -5,5 +5,8 @@
     <Setting Name="RDPLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\Alex Castro\Desktop\Connect to Server.rdp</Value>
     </Setting>
+    <Setting Name="Keyword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LLFADB119</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

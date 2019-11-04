@@ -34,5 +34,17 @@ namespace ClipboardMonitor {
                 this["RDPLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LLFADB119")]
+        public string Keyword {
+            get {
+                return ((string)(this["Keyword"]));
+            }
+            set {
+                this["Keyword"] = value;
+            }
+        }
     }
 }

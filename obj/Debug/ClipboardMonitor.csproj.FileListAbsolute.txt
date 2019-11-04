@@ -16,3 +16,4 @@ C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csproj.
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csproj.CoreCompileInputs.cache
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.exe
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.pdb
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.InputForm.resources

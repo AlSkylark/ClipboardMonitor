@@ -10,11 +10,13 @@ using System.Runtime.InteropServices;
 namespace ClipboardMonitor
 {
 	/// <summary>
-	/// Summary description for Form1.
+	/// This code opens an instance of RDP if one isn't already running, adds an event handle to the rdp process and starts a clipboard monitor in search for a keyword that will 
+    /// "tell" it to open the link. Keyword can be changed...
 	/// </summary>
 	public class MainForm : Form
     {
         private const int SW_MAXIMIZE = 3;
+        private ToolStripMenuItem setKeywordToolStripMenuItem;
         private const int SW_MINIMIZE = 6;
 
         [DllImport("User32.dll")]
@@ -34,7 +36,7 @@ namespace ClipboardMonitor
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        private System.Windows.Forms.RichTextBox txtMain;
+        private RichTextBox txtMain;
 
 		IntPtr nextClipboardViewer;
         private NotifyIcon niClipboardMonitor;
@@ -44,15 +46,16 @@ namespace ClipboardMonitor
         private IContainer components;
         private Process[] pname;
         private Process rdp;
+        private string keyword;
 
         public MainForm()
 		{
-
+            if (CMSettings.Default.Keyword.Length != 0) { keyword = CMSettings.Default.Keyword; } else { MessageBox.Show("No link Keyword set!"); Close(); }
 			InitializeComponent();
             pname = Process.GetProcessesByName("mstsc");
             if (pname.Length == 0)
             {
-                if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); } //OPEN rdp
+                if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); } else { MessageBox.Show("No RDP Location set!"); Close(); } //OPEN rdp
                 pname = Process.GetProcessesByName("mstsc"); //find it again and assign it to rdp p variable
                 rdp = pname[0];
             }
@@ -97,6 +100,7 @@ namespace ClipboardMonitor
             this.ctxtForNICON = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setRDPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.setKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtForNICON.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,24 +127,32 @@ namespace ClipboardMonitor
             // ctxtForNICON
             // 
             this.ctxtForNICON.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setKeywordToolStripMenuItem,
             this.setRDPFileToolStripMenuItem,
             this.toolStripMenuItem1});
             this.ctxtForNICON.Name = "ctxtForNICON";
-            this.ctxtForNICON.Size = new System.Drawing.Size(137, 48);
+            this.ctxtForNICON.Size = new System.Drawing.Size(181, 92);
             // 
             // setRDPFileToolStripMenuItem
             // 
             this.setRDPFileToolStripMenuItem.Name = "setRDPFileToolStripMenuItem";
-            this.setRDPFileToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.setRDPFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setRDPFileToolStripMenuItem.Text = "Set RDP File";
             this.setRDPFileToolStripMenuItem.Click += new System.EventHandler(this.setRDPFileToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Close";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // setKeywordToolStripMenuItem
+            // 
+            this.setKeywordToolStripMenuItem.Name = "setKeywordToolStripMenuItem";
+            this.setKeywordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setKeywordToolStripMenuItem.Text = "Set Keyword";
+            this.setKeywordToolStripMenuItem.Click += new System.EventHandler(this.setKeywordToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -205,7 +217,7 @@ namespace ClipboardMonitor
                 {
                     //txtMain.Text = (string)iData.GetData(DataFormats.Text); //Enable if need to see text...
                     string t = (string)iData.GetData(DataFormats.Text);
-                    if (t.IndexOf("LLFADB119") == 0)
+                    if (t.IndexOf(keyword) == 0)
                     {
                         t = GetURL(t);
                         
@@ -295,6 +307,12 @@ namespace ClipboardMonitor
                 CMSettings.Default.RDPLocation = chooseFile.FileName;
                 CMSettings.Default.Save();
             }
+        }
+
+        private void setKeywordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputForm input = new InputForm();
+            input.Show();
         }
     }
 }
