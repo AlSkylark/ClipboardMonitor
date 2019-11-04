@@ -14,9 +14,6 @@
             <setting name="Keyword" serializeAs="String">
                 <value>LLFADB119</value>
             </setting>
-            <setting name="InitialSetup" serializeAs="String">
-                <value>False</value>
-            </setting>
         </ClipboardMonitor.CMSettings>
         <ClipboardMonitor.Settings1>
             <setting name="RDPLocation" serializeAs="String">

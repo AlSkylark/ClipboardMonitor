@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputForm));
             this.txtKey = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSet = new System.Windows.Forms.Button();
@@ -86,6 +87,7 @@
             this.Controls.Add(this.btnSet);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtKey);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InputForm";
             this.ShowIcon = false;
             this.Text = "Set Keyword";

@@ -8,5 +8,8 @@
     <Setting Name="Keyword" Type="System.String" Scope="User">
       <Value Profile="(Default)">LLFADB119</Value>
     </Setting>
+    <Setting Name="InitialSetup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

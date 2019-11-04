@@ -17,3 +17,7 @@ C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.csproj.
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.exe
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.pdb
 C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.InputForm.resources
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Debug\ClipboardMonitor.exe.manifest
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Debug\ClipboardMonitor.application
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.exe.manifest
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Debug\ClipboardMonitor.application

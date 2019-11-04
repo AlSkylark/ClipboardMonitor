@@ -178,7 +178,15 @@ namespace ClipboardMonitor
 		[STAThread]
 		static void Main() 
 		{
-			Application.Run(new MainForm());
+            if (CMSettings.Default.InitialSetup == false)
+            {
+                Application.Run(new InitialSetup());
+            }
+            else
+            {
+                Application.Run(new MainForm());
+            }
+			
 		}
 
 		protected override void WndProc(ref System.Windows.Forms.Message m)

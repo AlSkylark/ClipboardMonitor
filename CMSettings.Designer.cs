@@ -46,5 +46,17 @@ namespace ClipboardMonitor {
                 this["Keyword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InitialSetup {
+            get {
+                return ((bool)(this["InitialSetup"]));
+            }
+            set {
+                this["InitialSetup"] = value;
+            }
+        }
     }
 }

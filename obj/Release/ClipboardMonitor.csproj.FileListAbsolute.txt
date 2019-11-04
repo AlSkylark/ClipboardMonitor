@@ -1,0 +1,13 @@
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Release\ClipboardMonitor.exe.config
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Release\ClipboardMonitor.exe.manifest
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Release\ClipboardMonitor.application
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\bin\Release\ClipboardMonitor.exe
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.csprojAssemblyReference.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.InputForm.resources
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.MainForm.resources
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.csproj.GenerateResource.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.csproj.CoreCompileInputs.cache
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.exe.manifest
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.application
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.exe
+C:\Users\Alex Castro\Desktop\ClipboardMonitor\obj\Release\ClipboardMonitor.InitialSetup.resources
