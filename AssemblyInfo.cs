@@ -6,12 +6,12 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Link Opener - Clipboard Monitor")]
+[assembly: AssemblyDescription("A small application that monitors the client's clipboard in search for a specific keyword that an Access database in a Remote Desktop Connection will have in front of URLs to open said links outside of the RDP connection.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Landscape Show Ltd.")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Alex Castro")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 

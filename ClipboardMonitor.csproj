@@ -7,7 +7,7 @@
     <ProjectGuid>{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationIcon>mstsc_101.ico</ApplicationIcon>
     <AssemblyKeyContainerName />
     <AssemblyName>ClipboardMonitor</AssemblyName>
     <AssemblyOriginatorKeyFile />
@@ -138,6 +138,7 @@
       <DependentUpon>CMSettings.settings</DependentUpon>
     </Compile>
     <Content Include="App.ico" />
+    <Content Include="mstsc_101.ico" />
     <EmbeddedResource Include="InitialSetup.resx">
       <DependentUpon>InitialSetup.cs</DependentUpon>
     </EmbeddedResource>
