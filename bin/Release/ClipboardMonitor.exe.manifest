@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="ClipboardMonitor.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="ClipboardMonitor.exe" version="1.0.1.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="mstsc_101.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="ClipboardMonitor" version="1.0.7248.16974" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="ClipboardMonitor" version="1.0.7249.23021" language="neutral" processorArchitecture="msil" />
     <commandLine file="ClipboardMonitor.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -44,13 +44,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ClipboardMonitor.exe" size="459784">
-      <assemblyIdentity name="ClipboardMonitor" version="1.0.7248.16974" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="ClipboardMonitor" version="1.0.7249.23021" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Koas4p8eVdkhU2Ea1qFvF4Dtb3NNxRv0XHqr2+tmsXs=</dsig:DigestValue>
+        <dsig:DigestValue>iz1bqBvJIdipvFYOGvpUXn0BjMBoNyhlTvjrZ54hQ/E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -63,13 +63,13 @@
       <dsig:DigestValue>OCzTmXgySRviSOGdrwDliBBXx6CBivI2STQaK5fhJSc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="ClipboardMonitor.exe.config" size="1604">
+  <file name="ClipboardMonitor.exe.config" size="1732">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>JmXuUNLPwyBoyxjks4ZrcNQyk4de496iP0f4+6s3NwU=</dsig:DigestValue>
+      <dsig:DigestValue>1mw0LPM0eWLHmMU8t+ONWJIG4v1SR9h4vvkFNpYD9Qw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="mstsc_101.ico" size="164466">

@@ -17,6 +17,7 @@ namespace ClipboardMonitor
     {
         private const int SW_MAXIMIZE = 3;
         private ToolStripMenuItem setKeywordToolStripMenuItem;
+        private ToolStripMenuItem version101ToolStripMenuItem;
         private const int SW_MINIMIZE = 6;
 
         [DllImport("User32.dll")]
@@ -98,9 +99,10 @@ namespace ClipboardMonitor
             this.txtMain = new System.Windows.Forms.RichTextBox();
             this.niClipboardMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.ctxtForNICON = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.setKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setRDPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.setKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.version101ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtForNICON.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,11 +129,19 @@ namespace ClipboardMonitor
             // ctxtForNICON
             // 
             this.ctxtForNICON.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.version101ToolStripMenuItem,
             this.setKeywordToolStripMenuItem,
             this.setRDPFileToolStripMenuItem,
             this.toolStripMenuItem1});
             this.ctxtForNICON.Name = "ctxtForNICON";
-            this.ctxtForNICON.Size = new System.Drawing.Size(181, 92);
+            this.ctxtForNICON.Size = new System.Drawing.Size(181, 114);
+            // 
+            // setKeywordToolStripMenuItem
+            // 
+            this.setKeywordToolStripMenuItem.Name = "setKeywordToolStripMenuItem";
+            this.setKeywordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setKeywordToolStripMenuItem.Text = "Set Keyword";
+            this.setKeywordToolStripMenuItem.Click += new System.EventHandler(this.setKeywordToolStripMenuItem_Click);
             // 
             // setRDPFileToolStripMenuItem
             // 
@@ -147,12 +157,13 @@ namespace ClipboardMonitor
             this.toolStripMenuItem1.Text = "Close";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
-            // setKeywordToolStripMenuItem
+            // version101ToolStripMenuItem
             // 
-            this.setKeywordToolStripMenuItem.Name = "setKeywordToolStripMenuItem";
-            this.setKeywordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.setKeywordToolStripMenuItem.Text = "Set Keyword";
-            this.setKeywordToolStripMenuItem.Click += new System.EventHandler(this.setKeywordToolStripMenuItem_Click);
+            this.version101ToolStripMenuItem.Enabled = false;
+            this.version101ToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.version101ToolStripMenuItem.Name = "version101ToolStripMenuItem";
+            this.version101ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.version101ToolStripMenuItem.Text = "Version 1.0.1";
             // 
             // MainForm
             // 
@@ -178,6 +189,12 @@ namespace ClipboardMonitor
 		[STAThread]
 		static void Main() 
 		{
+            if (CMSettings.Default.UpgradeRequired == true)
+            {
+                CMSettings.Default.Upgrade();
+                CMSettings.Default.UpgradeRequired = false;
+                CMSettings.Default.Save();
+            }
             if (CMSettings.Default.InitialSetup == false)
             {
                 Application.Run(new InitialSetup());
