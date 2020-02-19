@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
 using System.Runtime.InteropServices;
+using System.Deployment.Application;
+using Outlook = Microsoft.Office.Interop.Outlook;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace ClipboardMonitor
 {
@@ -17,9 +20,11 @@ namespace ClipboardMonitor
     {
         private const int SW_MAXIMIZE = 3;
         private ToolStripMenuItem setKeywordToolStripMenuItem;
-        private ToolStripMenuItem version101ToolStripMenuItem;
+        private ToolStripMenuItem txtVersion;
+        private ToolStripMenuItem setMailKeywordToolStripMenuItem;
+        private ToolStripMenuItem setTemplatePathToolStripMenuItem;
         private const int SW_MINIMIZE = 6;
-
+        
         [DllImport("User32.dll")]
 		protected static extern int SetClipboardViewer(int hWndNewViewer);
 
@@ -47,16 +52,33 @@ namespace ClipboardMonitor
         private IContainer components;
         private Process[] pname;
         private Process rdp;
-        private string keyword;
+        private string keyword, mkeyword;
 
         public MainForm()
 		{
-            if (CMSettings.Default.Keyword.Length != 0) { keyword = CMSettings.Default.Keyword; } else { MessageBox.Show("No link Keyword set!"); Close(); }
-			InitializeComponent();
+            //we check if the keyword was set, if it was we assign it to a variable (for ease of use)
+            if (CMSettings.Default.Keyword.Length != 0 && CMSettings.Default.MailKeyword.Length != 0)
+            {
+                keyword = CMSettings.Default.Keyword;
+                mkeyword = CMSettings.Default.MailKeyword;
+
+            } else
+            {
+                MessageBox.Show("No link or mail Keyword set!");
+                Close();
+            }
+
+            InitializeComponent();
+
+            //we find the main rdp process, named mstsc in the process list because windows lol
             pname = Process.GetProcessesByName("mstsc");
+
+            //if we couldn't get the process we initialize it with the path in the settings (so we open rdp) 
             if (pname.Length == 0)
             {
-                if (CMSettings.Default.RDPLocation.Length != 0) { Process.Start(CMSettings.Default.RDPLocation); } else { MessageBox.Show("No RDP Location set!"); Close(); } //OPEN rdp
+                if (CMSettings.Default.RDPLocation.Length != 0)  Process.Start(CMSettings.Default.RDPLocation);
+                else MessageBox.Show("No RDP Location set!"); Close();  //OPEN rdp
+
                 pname = Process.GetProcessesByName("mstsc"); //find it again and assign it to rdp p variable
                 rdp = pname[0];
             }
@@ -64,6 +86,9 @@ namespace ClipboardMonitor
             {
                 rdp = pname[0];
             }
+
+            //we attach the exit event to our observed process
+            //if it finishes we close the link opener too
             rdp.EnableRaisingEvents = true;
             rdp.Exited += new EventHandler(rdp_Exited);
             this.WindowState = FormWindowState.Minimized;
@@ -99,10 +124,12 @@ namespace ClipboardMonitor
             this.txtMain = new System.Windows.Forms.RichTextBox();
             this.niClipboardMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.ctxtForNICON = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.txtVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.setKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setRDPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setMailKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setTemplatePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.version101ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxtForNICON.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,12 +156,22 @@ namespace ClipboardMonitor
             // ctxtForNICON
             // 
             this.ctxtForNICON.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.version101ToolStripMenuItem,
+            this.txtVersion,
             this.setKeywordToolStripMenuItem,
             this.setRDPFileToolStripMenuItem,
+            this.setMailKeywordToolStripMenuItem,
+            this.setTemplatePathToolStripMenuItem,
             this.toolStripMenuItem1});
             this.ctxtForNICON.Name = "ctxtForNICON";
-            this.ctxtForNICON.Size = new System.Drawing.Size(181, 114);
+            this.ctxtForNICON.Size = new System.Drawing.Size(181, 158);
+            // 
+            // txtVersion
+            // 
+            this.txtVersion.Enabled = false;
+            this.txtVersion.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(180, 22);
+            this.txtVersion.Text = "Ver. 1.1.0.5";
             // 
             // setKeywordToolStripMenuItem
             // 
@@ -150,20 +187,26 @@ namespace ClipboardMonitor
             this.setRDPFileToolStripMenuItem.Text = "Set RDP File";
             this.setRDPFileToolStripMenuItem.Click += new System.EventHandler(this.setRDPFileToolStripMenuItem_Click);
             // 
+            // setMailKeywordToolStripMenuItem
+            // 
+            this.setMailKeywordToolStripMenuItem.Name = "setMailKeywordToolStripMenuItem";
+            this.setMailKeywordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setMailKeywordToolStripMenuItem.Text = "Set Mail Keyword";
+            this.setMailKeywordToolStripMenuItem.Click += new System.EventHandler(this.setMailKeywordToolStripMenuItem_Click);
+            // 
+            // setTemplatePathToolStripMenuItem
+            // 
+            this.setTemplatePathToolStripMenuItem.Name = "setTemplatePathToolStripMenuItem";
+            this.setTemplatePathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setTemplatePathToolStripMenuItem.Text = "Set Template Path";
+            this.setTemplatePathToolStripMenuItem.Click += new System.EventHandler(this.setTemplatePathToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem1.Text = "Close";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // version101ToolStripMenuItem
-            // 
-            this.version101ToolStripMenuItem.Enabled = false;
-            this.version101ToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.version101ToolStripMenuItem.Name = "version101ToolStripMenuItem";
-            this.version101ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.version101ToolStripMenuItem.Text = "Version 1.0.1";
             // 
             // MainForm
             // 
@@ -189,6 +232,8 @@ namespace ClipboardMonitor
 		[STAThread]
 		static void Main() 
 		{
+            //Simple check of the settings to see if the application needs upgrading (still WIP) 
+            //and check if the application hasn't been run before
             if (CMSettings.Default.UpgradeRequired == true)
             {
                 CMSettings.Default.Upgrade();
@@ -211,6 +256,9 @@ namespace ClipboardMonitor
 			// defined in winuser.h
 			const int WM_DRAWCLIPBOARD = 0x308;
 			const int WM_CHANGECBCHAIN = 0x030D;
+
+            //In a nutshell, this runs everytime the clipboard is updated
+            //then executes the "GetClipboardData" method to check the data in the clipboard
 
             switch (m.Msg)
 			{
@@ -240,16 +288,61 @@ namespace ClipboardMonitor
        
                 if (iData.GetDataPresent(DataFormats.Text))
                 {
-                    //txtMain.Text = (string)iData.GetData(DataFormats.Text); //Enable if need to see text...
+                    //Enable if need to see text...
+                    //txtMain.Text = (string)iData.GetData(DataFormats.Text); 
+                    
+
                     string t = (string)iData.GetData(DataFormats.Text);
                     if (t.IndexOf(keyword) == 0)
                     {
+                        //we get the clean url
                         t = GetURL(t);
                         
                         IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, rdp.MainWindowTitle);
                         
                         ShowWindow(hwnd, SW_MINIMIZE);
                         Process.Start(t);
+                    } 
+                    else if (t.IndexOf(mkeyword) == 0)
+                    {
+                        //we process that string into an object
+                        MailInfo mInfo = new MailInfo(t);
+
+                        IntPtr hwnd = FindWindowByCaption(IntPtr.Zero, rdp.MainWindowTitle);
+
+                        //minimize rdp
+                        ShowWindow(hwnd, SW_MINIMIZE);
+
+                        //OUTLOOK PROCESS HERE! 
+                        //we load the template path
+                        string template = CMSettings.Default.TemplateLocation;
+
+                        //here we create an Outlook App instance to create a new mailitem from template
+                        Outlook.Application oApp = new Outlook.Application();
+                        Outlook.MailItem nMail = oApp.CreateItemFromTemplate(template) as Outlook.MailItem;
+                        //Outlook.MailItem nMail = oApp.CreateItemFromTemplate(@"C:\Users\Alex Castro\AppData\Roaming\Microsoft\Templates\Ticket Request.oft") as Outlook.MailItem;
+
+                        nMail.To = mInfo.Email;
+
+                        //after assigning the email to the "To" bit, we open 
+                        //a word document to edit the body. Why a word doc? 
+                        //Because we lose the template formatting otherwise!
+                        Word.Document doc = new Word.Document();
+                        doc = nMail.GetInspector.WordEditor as Word.Document;
+                        Word.Range fRng = doc.Range();
+
+                        while (fRng.Find.Execute(FindText: "…,"))
+                        {
+                            fRng.Text = $"{mInfo.Name},";
+                            fRng.Collapse(0);
+                        }
+                        while (fRng.Find.Execute(FindText: "* … *"))
+                        {
+                            fRng.Text = $"* {mInfo.ID} *";
+                            fRng.Collapse(0);
+                        }
+
+                        nMail.Display();
                     }
                 }
 
@@ -260,6 +353,41 @@ namespace ClipboardMonitor
 			}
 		}
 
+        /// <summary>
+        /// A simple struct to hold the values of the Mail Link String
+        /// </summary>
+        private struct MailInfo
+        {
+            public string Name;
+            public string ID;
+            public string Email;
+
+            /// <summary>
+            /// Processes the clipboard data into each Mail item. By breaking down the string through its indexes.
+            /// </summary>
+            /// <param name="clipData"></param>
+            public MailInfo (string clipData)
+            {
+                int inxID, inxEM;
+
+                clipData = clipData.Substring(9);
+                
+                inxID = clipData.IndexOf(CMSettings.Default.IndexID);
+                inxEM = clipData.IndexOf(CMSettings.Default.IndexEM);
+
+                Name = clipData.Substring(0, inxID);
+                ID = clipData.Substring(inxID + 4, inxEM - (inxID + 4));
+                Email = clipData.Substring(inxEM + 4);
+                
+            }
+        }
+
+
+        /// <summary>
+        /// This method returns a cleaned URL string.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         private string GetURL(string text)
         {
             text = text.Substring(9);
@@ -330,6 +458,28 @@ namespace ClipboardMonitor
             if (chooseFile.ShowDialog() == DialogResult.OK)
             {
                 CMSettings.Default.RDPLocation = chooseFile.FileName;
+                CMSettings.Default.Save();
+            }
+        }
+
+        private void setMailKeywordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputForm input = new InputForm();
+            input.setText("Set Mail Keyword:");
+            input.setInput(CMSettings.Default.MailKeyword);
+            input.Show();
+        }
+
+        private void setTemplatePathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog chooseFile = new SaveFileDialog();
+            chooseFile.Title = "Select Template Location";
+            chooseFile.Filter = "Outlook Template Files (*.oft)|*.oft";
+            chooseFile.InitialDirectory = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Templates";
+            chooseFile.OverwritePrompt = false;
+            if (chooseFile.ShowDialog() == DialogResult.OK)
+            {
+                CMSettings.Default.TemplateLocation = chooseFile.FileName;
                 CMSettings.Default.Save();
             }
         }

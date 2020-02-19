@@ -9,10 +9,22 @@
       <Value Profile="(Default)">LLFADB119</Value>
     </Setting>
     <Setting Name="InitialSetup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MailKeyword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MLFADB119</Value>
+    </Setting>
+    <Setting Name="TemplateLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Alex Castro\AppData\Roaming\Microsoft\Templates\Ticket Request.oft</Value>
+    </Setting>
+    <Setting Name="IndexID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$ID$</Value>
+    </Setting>
+    <Setting Name="IndexEM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$EM$</Value>
     </Setting>
   </Settings>
 </SettingsFile>

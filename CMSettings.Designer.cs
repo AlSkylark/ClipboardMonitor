@@ -49,7 +49,7 @@ namespace ClipboardMonitor {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool InitialSetup {
             get {
                 return ((bool)(this["InitialSetup"]));
@@ -68,6 +68,54 @@ namespace ClipboardMonitor {
             }
             set {
                 this["UpgradeRequired"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MLFADB119")]
+        public string MailKeyword {
+            get {
+                return ((string)(this["MailKeyword"]));
+            }
+            set {
+                this["MailKeyword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Alex Castro\\AppData\\Roaming\\Microsoft\\Templates\\Ticket Request.oft")]
+        public string TemplateLocation {
+            get {
+                return ((string)(this["TemplateLocation"]));
+            }
+            set {
+                this["TemplateLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$ID$")]
+        public string IndexID {
+            get {
+                return ((string)(this["IndexID"]));
+            }
+            set {
+                this["IndexID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$EM$")]
+        public string IndexEM {
+            get {
+                return ((string)(this["IndexEM"]));
+            }
+            set {
+                this["IndexEM"] = value;
             }
         }
     }
