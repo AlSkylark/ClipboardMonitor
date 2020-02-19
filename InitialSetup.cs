@@ -66,7 +66,7 @@ namespace ClipboardMonitor
             SaveFileDialog chooseFile = new SaveFileDialog();
             chooseFile.Title = "Select Template Location";
             chooseFile.Filter = "Outlook Template Files (*.oft)|*.oft";
-            chooseFile.InitialDirectory = @"C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Templates";
+            chooseFile.InitialDirectory = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Templates";
             chooseFile.OverwritePrompt = false;
             if (chooseFile.ShowDialog() == DialogResult.OK)
             {

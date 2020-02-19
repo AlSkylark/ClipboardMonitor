@@ -49,7 +49,7 @@ namespace ClipboardMonitor {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool InitialSetup {
             get {
                 return ((bool)(this["InitialSetup"]));

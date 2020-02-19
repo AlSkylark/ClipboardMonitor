@@ -56,6 +56,9 @@ namespace ClipboardMonitor
 
         public MainForm()
 		{
+
+            InitializeComponent();
+
             //we check if the keyword was set, if it was we assign it to a variable (for ease of use)
             if (CMSettings.Default.Keyword.Length != 0 && CMSettings.Default.MailKeyword.Length != 0)
             {
@@ -68,16 +71,14 @@ namespace ClipboardMonitor
                 Close();
             }
 
-            InitializeComponent();
-
             //we find the main rdp process, named mstsc in the process list because windows lol
             pname = Process.GetProcessesByName("mstsc");
 
             //if we couldn't get the process we initialize it with the path in the settings (so we open rdp) 
             if (pname.Length == 0)
             {
-                if (CMSettings.Default.RDPLocation.Length != 0)  Process.Start(CMSettings.Default.RDPLocation);
-                else MessageBox.Show("No RDP Location set!"); Close();  //OPEN rdp
+                if (CMSettings.Default.RDPLocation.Length != 0) Process.Start(CMSettings.Default.RDPLocation);
+                else { MessageBox.Show("No RDP Location set!"); Close(); }  //OPEN rdp
 
                 pname = Process.GetProcessesByName("mstsc"); //find it again and assign it to rdp p variable
                 rdp = pname[0];
@@ -93,8 +94,8 @@ namespace ClipboardMonitor
             rdp.Exited += new EventHandler(rdp_Exited);
             this.WindowState = FormWindowState.Minimized;
 			nextClipboardViewer = (IntPtr)SetClipboardViewer((int) this.Handle);
-
-		}
+            
+        }
 
         /// <summary>
         /// Clean up any resources being used. Overriden to change the clipboard.
@@ -171,7 +172,7 @@ namespace ClipboardMonitor
             this.txtVersion.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(180, 22);
-            this.txtVersion.Text = "Ver. 1.1.0.5";
+            this.txtVersion.Text = "Ver. 1.1.0.7";
             // 
             // setKeywordToolStripMenuItem
             // 
@@ -465,9 +466,9 @@ namespace ClipboardMonitor
         private void setMailKeywordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InputForm input = new InputForm();
+            input.Show();
             input.setText("Set Mail Keyword:");
             input.setInput(CMSettings.Default.MailKeyword);
-            input.Show();
         }
 
         private void setTemplatePathToolStripMenuItem_Click(object sender, EventArgs e)
