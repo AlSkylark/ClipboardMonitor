@@ -21,6 +21,8 @@ namespace ClipboardMonitor
         {
             txtKey.Text = CMSettings.Default.Keyword;
             txtMailKey.Text = CMSettings.Default.MailKeyword;
+            txtPath.Text = CMSettings.Default.RDPLocation;
+            txtOutlook.Text = CMSettings.Default.TemplateLocation;
         }
 
         private void chkDefault_Click(object sender, EventArgs e)
@@ -86,6 +88,11 @@ namespace ClipboardMonitor
                 txtMailKey.BackColor = SystemColors.Window;
                 txtMailKey.Enabled = true;
             }
+        }
+
+        private void InitialSetup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing) Application.Exit();
         }
     }
 }

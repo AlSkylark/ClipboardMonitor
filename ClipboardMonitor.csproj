@@ -9,7 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>mstsc_101.ico</ApplicationIcon>
     <AssemblyKeyContainerName />
-    <AssemblyName>ClipboardMonitor</AssemblyName>
+    <AssemblyName>Link Opener</AssemblyName>
     <AssemblyOriginatorKeyFile />
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
@@ -27,18 +27,19 @@
     <OldToolsVersion>0.0</OldToolsVersion>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Alex Castro\Desktop\FinishedProject\</PublishUrl>
+    <PublishUrl>\\server\shared\Computer Database Stuff\LinkOpener\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>6</ApplicationRevision>
-    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <MinimumRequiredVersion>1.2.0.0</MinimumRequiredVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -86,16 +87,20 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>11866E6D8DA9A34940CA92D2B02736575501D855</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>455905D21042869B0242F68CDF1BED3EF2EA266E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ClipboardMonitor_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ClipboardMonitor_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -143,6 +148,7 @@
       <DependentUpon>CMSettings.settings</DependentUpon>
     </Compile>
     <Content Include="App.ico" />
+    <Content Include="leaf.ico" />
     <Content Include="mstsc_101.ico" />
     <EmbeddedResource Include="InitialSetup.resx">
       <DependentUpon>InitialSetup.cs</DependentUpon>
@@ -156,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClipboardMonitor_1_TemporaryKey.pfx" />
     <None Include="ClipboardMonitor_TemporaryKey.pfx" />
     <None Include="CMSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

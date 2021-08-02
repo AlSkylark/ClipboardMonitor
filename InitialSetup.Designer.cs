@@ -256,6 +256,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InitialSetup";
             this.Text = "Initial Setup";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InitialSetup_FormClosing);
             this.Load += new System.EventHandler(this.InitialSetup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

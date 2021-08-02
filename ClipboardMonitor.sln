@@ -4,21 +4,29 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardMonitor", "ClipboardMonitor.csproj", "{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CMSetup", "..\FinishedProject\CMSetup\CMSetup.vdproj", "{9DDE8583-3046-4250-989E-889D25B26446}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Debug|x86.Build.0 = Debug|Any CPU
 		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DDE8583-3046-4250-989E-889D25B26446}.Debug|Any CPU.ActiveCfg = Debug
-		{9DDE8583-3046-4250-989E-889D25B26446}.Release|Any CPU.ActiveCfg = Release
-		{9DDE8583-3046-4250-989E-889D25B26446}.Release|Any CPU.Build.0 = Release
+		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF59F36B-2F60-439A-B3C7-9B2ACB7D6CDD}.Release|x86.Build.0 = Release|Any CPU
+		{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}.Debug|Any CPU.ActiveCfg = Debug
+		{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}.Debug|x86.ActiveCfg = Debug
+		{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}.Release|Any CPU.ActiveCfg = Release
+		{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}.Release|Any CPU.Build.0 = Release
+		{BE3FD3CD-B31E-49EA-92E5-D59DA24E8700}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

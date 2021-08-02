@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Deployment.Application;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Word = Microsoft.Office.Interop.Word;
+using System.IO;
 
 namespace ClipboardMonitor
 {
@@ -56,45 +57,78 @@ namespace ClipboardMonitor
 
         public MainForm()
 		{
+            string cmlocation = CMSettings.Default.RDPLocation;
+            string cmkey = CMSettings.Default.Keyword;
+            string cmmailkey = CMSettings.Default.MailKeyword;
 
             InitializeComponent();
 
+            this.WindowState = FormWindowState.Minimized;
             //we check if the keyword was set, if it was we assign it to a variable (for ease of use)
-            if (CMSettings.Default.Keyword.Length != 0 && CMSettings.Default.MailKeyword.Length != 0)
+            if (cmkey.Length != 0 && cmmailkey.Length != 0)
             {
                 keyword = CMSettings.Default.Keyword;
                 mkeyword = CMSettings.Default.MailKeyword;
 
-            } else
-            {
-                MessageBox.Show("No link or mail Keyword set!");
-                Close();
-            }
+                #region Main Initialize
 
-            //we find the main rdp process, named mstsc in the process list because windows lol
-            pname = Process.GetProcessesByName("mstsc");
+                
+                //we find the main rdp process, named mstsc in the process list because windows lol
+                pname = Process.GetProcessesByName("mstsc");
 
-            //if we couldn't get the process we initialize it with the path in the settings (so we open rdp) 
-            if (pname.Length == 0)
-            {
-                if (CMSettings.Default.RDPLocation.Length != 0) Process.Start(CMSettings.Default.RDPLocation);
-                else { MessageBox.Show("No RDP Location set!"); Close(); }  //OPEN rdp
+                //if we couldn't get the process we initialize it with the path in the settings (so we open rdp) 
+                //but not before doing basic checks, is the path 0 string? is the path valid?
+                if (pname.Length == 0)
+                {
 
-                pname = Process.GetProcessesByName("mstsc"); //find it again and assign it to rdp p variable
-                rdp = pname[0];
+                    InitialSetup initial = new InitialSetup();
+
+                    if (CMSettings.Default.RDPLocation.Length != 0)
+                    {
+
+                        if (File.Exists(cmlocation))
+                        {
+                            Process.Start(cmlocation);
+
+                            pname = Process.GetProcessesByName("mstsc");
+
+                            rdp = pname[0];
+                            //we attach the exit event to our observed process
+                            //if it finishes we close the link opener too
+                            rdp.EnableRaisingEvents = true;
+                            rdp.Exited += new EventHandler(rdp_Exited);
+                            nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Couldn't find RDP File!", "RDP Missing", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            initial.Show();
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("No RDP Location set!", "RDP Missing", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        initial.Show();
+                    }
+
+                }
+
+                #endregion
+
+
             }
             else
             {
-                rdp = pname[0];
+                MessageBox.Show("No link or mail Keyword set!", "Keywords Missing", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                CMSettings.Default.Keyword = "LLFADB119";
+                CMSettings.Default.MailKeyword = "MLFADB119";
+                CMSettings.Default.Save();
+                InitialSetup initial = new InitialSetup();
+                initial.Show();
             }
 
-            //we attach the exit event to our observed process
-            //if it finishes we close the link opener too
-            rdp.EnableRaisingEvents = true;
-            rdp.Exited += new EventHandler(rdp_Exited);
-            this.WindowState = FormWindowState.Minimized;
-			nextClipboardViewer = (IntPtr)SetClipboardViewer((int) this.Handle);
-            
+
         }
 
         /// <summary>
@@ -150,7 +184,7 @@ namespace ClipboardMonitor
             // 
             this.niClipboardMonitor.ContextMenuStrip = this.ctxtForNICON;
             this.niClipboardMonitor.Icon = ((System.Drawing.Icon)(resources.GetObject("niClipboardMonitor.Icon")));
-            this.niClipboardMonitor.Text = "Clipboard Monitor";
+            this.niClipboardMonitor.Text = "Link Opener";
             this.niClipboardMonitor.DoubleClick += new System.EventHandler(this.niClipboardMonitor_DoubleClick);
             this.niClipboardMonitor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.niClipboardMonitor_MouseClick);
             // 
@@ -172,7 +206,8 @@ namespace ClipboardMonitor
             this.txtVersion.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(180, 22);
-            this.txtVersion.Text = "Ver. 1.1.0.7";
+            this.txtVersion.Text = "Ver. 1.2.0.7";
+            this.txtVersion.Click += new System.EventHandler(this.txtVersion_Click);
             // 
             // setKeywordToolStripMenuItem
             // 
@@ -235,12 +270,6 @@ namespace ClipboardMonitor
 		{
             //Simple check of the settings to see if the application needs upgrading (still WIP) 
             //and check if the application hasn't been run before
-            if (CMSettings.Default.UpgradeRequired == true)
-            {
-                CMSettings.Default.Upgrade();
-                CMSettings.Default.UpgradeRequired = false;
-                CMSettings.Default.Save();
-            }
             if (CMSettings.Default.InitialSetup == false)
             {
                 Application.Run(new InitialSetup());
@@ -249,15 +278,15 @@ namespace ClipboardMonitor
             {
                 Application.Run(new MainForm());
             }
-			
-		}
 
-		protected override void WndProc(ref System.Windows.Forms.Message m)
+        }
+
+        protected override void WndProc(ref System.Windows.Forms.Message m)
 		{
 			// defined in winuser.h
 			const int WM_DRAWCLIPBOARD = 0x308;
 			const int WM_CHANGECBCHAIN = 0x030D;
-
+            
             //In a nutshell, this runs everytime the clipboard is updated
             //then executes the "GetClipboardData" method to check the data in the clipboard
 
@@ -483,6 +512,11 @@ namespace ClipboardMonitor
                 CMSettings.Default.TemplateLocation = chooseFile.FileName;
                 CMSettings.Default.Save();
             }
+        }
+
+        private void txtVersion_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void setKeywordToolStripMenuItem_Click(object sender, EventArgs e)

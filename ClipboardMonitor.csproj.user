@@ -10,10 +10,10 @@
     <CopyProjectOption>0</CopyProjectOption>
     <ProjectView>ProjectFiles</ProjectView>
     <ProjectTrust>0</ProjectTrust>
-    <PublishUrlHistory>C:\Users\Alex Castro\Desktop\FinishedProject\|C:\Users\Alex Castro\Desktop\</PublishUrlHistory>
-    <InstallUrlHistory />
+    <PublishUrlHistory>\\server\shared\Computer Database Stuff\LinkOpener\|C:\Users\Alex Castro\Desktop\FinishedProject\|C:\Users\Alex Castro\Desktop\</PublishUrlHistory>
+    <InstallUrlHistory>\\server\shared\Computer Database Stuff\LinkOpener\Setup\|\\server\shared\Computer Database Stuff\LinkOpener\|\\server\shared\</InstallUrlHistory>
     <SupportUrlHistory />
-    <UpdateUrlHistory />
+    <UpdateUrlHistory>\\server\shared\Computer Database Stuff\LinkOpener\</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
